@@ -1,0 +1,110 @@
+{% extends "accounts/base.html" %}
+
+{% block title %}
+Edit Course
+{% endblock title %}
+
+{% block content %}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        padding-top: 50px;
+    }
+
+    .container {
+        max-width: 600px;
+    }
+
+    .form-heading {
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .table th,
+    .table td {
+        vertical-align: middle;
+    }
+
+    .table td {
+        padding: 0.75rem;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 0.25rem;
+    }
+
+    .form-label {
+        font-weight: 500;
+    }
+</style>
+
+<div class="container">
+    <h2 class="form-heading text-center">Edit Course: {{ course.name }}</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Table Form Layout -->
+        <table class="table table-bordered">
+            <tbody>
+                <!-- Course Name -->
+                <tr>
+                    <td><label for="name" class="form-label">Course Name:</label></td>
+                    <td><input type="text" id="name" name="name" class="form-control" value="{{ course.name }}" required></td>
+                </tr>
+
+                <!-- Description -->
+                <tr>
+                    <td><label for="description" class="form-label">Description:</label></td>
+                    <td><textarea id="description" name="description" class="form-control" rows="4" required>{{ course.description }}</textarea></td>
+                </tr>
+
+                <!-- Duration -->
+                <tr>
+                    <td><label for="duration" class="form-label">Duration (in Month):</label></td>
+                    <td><input type="number" id="duration" name="duration" class="form-control" value="{{ course.duration }}" required></td>
+                </tr>
+
+                <!-- Prerequisites -->
+                <tr>
+                    <td><label for="prerequisites" class="form-label">Prerequisites (optional):</label></td>
+                    <td><textarea id="prerequisites" name="prerequisites" class="form-control" rows="3">{{ course.prerequisites }}</textarea></td>
+                </tr>
+
+                <!-- Status -->
+                <tr>
+                    <td><label for="status" class="form-label">Status:</label></td>
+                    <td>
+                        <select id="status" name="status" class="form-select">
+                            <option value="Active" {% if course.status == 'Active' %}selected{% endif %}>Active</option>
+                            <option value="Completed" {% if course.status == 'Completed' %}selected{% endif %}>Completed</option>
+                            <option value="Cancelled" {% if course.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Save Button -->
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary btn-lg">Save Changes</button>
+        </div>
+
+        <!-- Display Errors -->
+        {% if form.errors %}
+        <div class="alert alert-danger mt-3">
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </form>
+</div>
+
+{% endblock content %}

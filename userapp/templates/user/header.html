@@ -1,0 +1,55 @@
+<header class="bg-dark py-3 border-bottom">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="d-flex align-items-center">
+                    <img src="/static/img/website/aclclogo.png " alt="School Logo" class="me-3" style="height: 60px;">
+                    <div>
+                        <h1 class="h3 mb-0 text-white">American Computer & <br> Language Center</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            
+                            <li class="nav-item">
+                                {% if user.role == 'admin' %}
+                                <a class="nav-link" href="/profile/admin"><i class="fas fa-user me-1"></i> Profile </a>
+                                {% elif user.role == 'student' %}
+                                <a class="nav-link" href=" {% url "student_profile" user.id %} "><i class="fas fa-user me-1"></i> Profile </a>
+                                {% elif user.role == 'parent' %}
+                                <a class="nav-link" href="/profile/parent"><i class="fas fa-user me-1"></i> Profile </a>
+                                {% elif user.role == 'teacher' %}
+                                <a class="nav-link" href="/profile/teacher"><i class="fas fa-user me-1"></i> Profile </a>
+                                {% endif %}
+                            </li>
+
+                            {% if user.role == 'admin' %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/home"><i class="ffas fa-cogs me-1"></i> Control </a>
+                            </li>
+                            {% endif %}
+
+                            {% if user.role == 'parent' %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/admission"><i class="fas fa-user-plus me-1"></i>Admissions</a>
+                            </li>
+                            {% endif %}
+
+                            {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>

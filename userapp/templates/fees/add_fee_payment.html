@@ -1,0 +1,56 @@
+{% extends 'user/base.html' %}
+
+{% block title %}
+Add Fee Payment
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Add Fee Payment</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <!-- Student Name -->
+                <div class="form-group" style="width: 30rem;">
+                    <label for="student_name">Student:</label>
+                    <select name="student_name" class="form-control" required>
+                        {% for student in students %}
+                        <option value="{{ student.id }}">{{ student.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Fees Amount -->
+                <div class="form-group" style="width: 30rem;">
+                    <label for="fees_amount">Fees Amount:</label>
+                    <input type="number" name="fees_amount" class="form-control" required>
+                </div>
+
+                <!-- Payment Mode -->
+                <div class="form-group" style="width: 30rem;">
+                    <label for="payment_mode">Payment Mode:</label>
+                    <input type="text" name="payment_mode" class="form-control" required>
+                </div>
+
+                <!-- Installment Number -->
+                <div class="form-group" style="width: 30rem;">
+                    <label for="installment_number">Installment Number:</label>
+                    <input type="number" name="installment_number" class="form-control" required>
+                </div>
+
+                <!-- Total Installments -->
+                <div class="form-group" style="width: 30rem;">
+                    <label for="total_installments">Total Installments:</label>
+                    <input type="number" name="total_installments" class="form-control" required>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Add Payment</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock title %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS for Sidebar -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .sidebar {
+            height: 100vh;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #343a40;
+            padding-top: 20px;
+        }
+        .sidebar .nav-item {
+            width: 100%;
+        }
+        .sidebar .nav-link {
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
+        }
+        .sidebar .nav-link:hover {
+            background-color: #495057;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header (Include header.html) -->
+    {% include 'fees/header.html' %}
+    
+    <div class="d-flex">
+        <!-- Sidebar (Navigation) -->
+        <div class="sidebar">
+            <ul class="nav flex-column">
+                <!-- Dashboard Menu -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">
+                        Dashboard
+                    </a>
+                </li>
+
+                <!-- Add Student and Course Structure Menu with Submenu -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#addSubmenu" aria-expanded="false" aria-controls="feesSubmenu">
+                        Add Student/Course
+                    </a>
+                    <div class="collapse" id="addSubmenu">
+                        <ul class="nav flex-column pl-3">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'admission_form' %}">Add Student</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'student_list' %}">Student List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'create_course' %}">Add Course</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'course_list' %}">Course List</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Fees Structure Menu with Submenu -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#feesSubmenu" aria-expanded="false" aria-controls="feesSubmenu">
+                        Fee
+                    </a>
+                    <div class="collapse" id="feesSubmenu">
+                        <ul class="nav flex-column pl-3">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'course_fees_list' %}">All Course Fee</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'add_course_fee' %}">Add Course Fee</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'add_fee_payment' %}">Pay Fee</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Fee List</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Students Menu with Submenu -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#studentsSubmenu" aria-expanded="false" aria-controls="studentsSubmenu">
+                       Enroll Students
+                    </a>
+                    <div class="collapse" id="studentsSubmenu">
+                        <ul class="nav flex-column pl-3">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'enrolled_students_list' %}">All Students</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'enroll_student' %}">Enroll Student</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'add_fee_payment' %}">Pay for a Student</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Teachers Menu with Submenu -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#teachersSubmenu" aria-expanded="false" aria-controls="teachersSubmenu">
+                        Teachers
+                    </a>
+                    <div class="collapse" id="teachersSubmenu">
+                        <ul class="nav flex-column pl-3">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'teacher_list' %}">All Teachers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'add_teacher' %}">Add Teacher</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'teacher_salary_payment_list' %}">Teacher Salary List</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Classes Menu with Submenu -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#classesSubmenu" aria-expanded="false" aria-controls="classesSubmenu">
+                        Classes
+                    </a>
+                    <div class="collapse" id="classesSubmenu">
+                        <ul class="nav flex-column pl-3">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/classes">All Classes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/add-class">Add Class</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Exams Menu with Submenu -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#examsSubmenu" aria-expanded="false" aria-controls="examsSubmenu">
+                        Exams
+                    </a>
+                    <div class="collapse" id="examsSubmenu">
+                        <ul class="nav flex-column pl-3">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'exam_list' %}">Apply for Exam</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'schedule_exam' %}">Schedule an Exam</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'exam_list' %}">Exams List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'create_schedule' %}">Create Class Schedule</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'schedule_list' %}">Scheduled List</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Settings Menu -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Settings
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            {% block content %}
+            <!-- Content will be rendered here -->
+            {% endblock %}
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS and Dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+<!-- Footer (Include footer.html) -->
+{% include 'fees/footer.html' %}

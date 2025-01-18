@@ -1,0 +1,48 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+Add Teacher Salary Payment
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4"> Pay Teacher Salary </h1>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <!-- Teacher Name -->
+                <div class="form-group">
+                    <label for="teacher">Teacher:</label>
+                    <select name="teacher" class="form-control" required>
+                        {% for teacher in teachers %}
+                            <option value="{{ teacher.id }}">{{ teacher.full_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Amount Paid -->
+                <div class="form-group">
+                    <label for="amount_paid">Amount Paid:</label>
+                    <input type="number" name="amount_paid" class="form-control" required>
+                </div>
+
+                <!-- Payment Mode (Select Dropdown) -->
+                <div class="form-group">
+                    <label for="payment_mode">Payment Mode:</label>
+                    <select name="payment_mode" class="form-control" required>
+                        <option value="cash">Cash</option>
+                        <option value="bank_transfer">Bank Transfer</option>
+                        <option value="online">Online</option>
+                    </select>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Pay Now</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}

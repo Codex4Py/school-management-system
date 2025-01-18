@@ -1,0 +1,156 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+Teacher List
+{% endblock title %}
+
+{% block content %}
+<style>
+    .form-container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 80rem;
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+    /* Make it responsive on smaller screens */
+    @media (max-width: 1200px) {
+        .form-container {
+            max-width: 95%;
+            /* Allows some margin on the sides */
+            padding: 15px;
+            /* Adjust padding for smaller screens */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .form-container {
+            max-width: 100%;
+            /* Takes up full width on smaller screens like tablets */
+            padding: 10px;
+            /* Reduced padding for better space utilization */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .form-container {
+            max-width: 100%;
+            /* Ensures full width on mobile screens */
+            padding: 10px;
+            /* Keeps padding consistent on mobile */
+        }
+    }
+
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 12px;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    th {
+        font-weight: bold;
+        color: #555;
+        background-color: #f4f4f4;
+        /* Light gray background for the header */
+    }
+
+    /* Alternating row colors */
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+        /* Light gray background for even rows */
+    }
+
+    tr:nth-child(odd) {
+        background-color: #ffffff;
+        /* White background for odd rows */
+    }
+
+    .search-box {
+        margin-bottom: 20px;
+        text-align: right;
+    }
+
+    input[type="text"] {
+        padding: 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        width: 250px;
+        border: 1px solid #ccc;
+    }
+
+    .export-btn {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .export-btn a {
+        padding: 10px 15px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    .export-btn a:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<div style="border: rgb(101, 99, 99) solid 1px; width: 66rem;" class="form-container">
+    <h1>Teacher List</h1>
+
+    <!-- Export Button -->
+    <div class="export-btn">
+        <a href="{% url 'export_students_to_excel' %}">Export to Excel</a>
+    </div>
+
+    <!-- Search Form -->
+    <div class="search-box">
+        <form method="GET" action="{% url 'teacher_list' %}">
+            <input type="text" name="search" placeholder="Search by name or email" value="{{ search_query }}">
+        </form>
+    </div>
+
+    <!-- Students Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Sr.No.</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Course</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for teacher in teachers %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ teacher.name }}</td>
+                <td>{{ teacher.email }}</td>
+                <td>{{ teacher.course.name }}</td>
+                <td>
+                    <a href="{% url 'edit_teacher' teacher.id %}">Edit</a> |
+                    <a href="{% url 'show_teacher' teacher.id %}"> View </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No students found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

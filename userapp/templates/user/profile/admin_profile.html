@@ -1,0 +1,113 @@
+{% extends 'user/base.html' %}
+
+{% block title %} 
+Admin Profile
+{% endblock title %}
+
+
+{% block content %}
+<!-- Admin Profile -->
+<div class="container">
+    <!-- Profile Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h4 class="card-title mb-0">Administrator Profile</h4>
+                    <p class="mb-0">System Administration and Management</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Personal Information -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Personal Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <img src="{{ admin.profile_photo.url|default:'/media/img/default-avatar.jpg' }}" 
+                             class="rounded-circle img-thumbnail" style="width: 150px; height: 150px;">
+                        <h4 class="mt-3">{{ admin.full_name }}</h4>
+                        <p class="text-muted">Admin ID: {{ admin.id }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Email:</strong> {{ admin.email }}</li>
+                        <li class="list-group-item"><strong>Phone:</strong> {{ admin.phone_number }}</li>
+                        <li class="list-group-item"><strong>Department:</strong> Administration</li>
+                        <li class="list-group-item"><strong>Join Date:</strong> {{ admin.date_joined|date:"F d, Y" }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Administrative Tools -->
+        <div class="col-md-8">
+            <div class="row">
+                <!-- Quick Actions -->
+                <div class="col-12 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Quick Actions</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <a href="/dashboard/manage-user" class="btn btn-primary w-100">
+                                        <i class="fas fa-users mb-2"></i><br>
+                                        Manage Users
+                                    </a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="#" class="btn btn-success w-100">
+                                        <i class="fas fa-book mb-2"></i><br>
+                                        Academic Records
+                                    </a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="#" class="btn btn-info w-100">
+                                        <i class="fas fa-cog mb-2"></i><br>
+                                        System Settings
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Statistics -->
+                <div class="col-12 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">System Statistics</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3 text-center">
+                                    <h3 class="text-primary">{{ total_students|default:"0" }}</h3>
+                                    <p class="text-muted">Total Students</p>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <h3 class="text-success">{{ total_teachers|default:"0" }}</h3>
+                                    <p class="text-muted">Total Teachers</p>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <h3 class="text-info">{{ total_parents|default:"0" }}</h3>
+                                    <p class="text-muted">Total Parents</p>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <h3 class="text-warning">{{ total_courses|default:"0" }}</h3>
+                                    <p class="text-muted">Total Courses</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

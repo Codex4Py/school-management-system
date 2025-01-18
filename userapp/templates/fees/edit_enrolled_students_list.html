@@ -1,0 +1,90 @@
+{% extends 'user/base.html' %}
+
+{% block title %}
+Edit Enrollment
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Edit Enrollment</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td><label for="student_name">Student Name</label></td>
+                    <td>
+                        <select class="form-select" name="student_name" id="student_name" required>
+                            {% for student in students %}
+                                <option value="{{ student.id }}" {% if student.id == enrollment.student_name.id %}selected{% endif %}>
+                                    {{ student.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="enrolled_course">Enrolled Course</label></td>
+                    <td>
+                        <select class="form-select" name="enrolled_course" id="enrolled_course" required>
+                            {% for course in courses %}
+                                <option value="{{ course.id }}" {% if course.id == enrollment.enrolled_course.id %}selected{% endif %}>
+                                    {{ course.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="fees_for_course">Course Fees</label></td>
+                    <td>
+                        <select class="form-select" name="fees_for_course" id="fees_for_course" required>
+                            {% for fee in course_fees %}
+                                <option value="{{ fee.id }}" {% if fee.id == enrollment.fees_for_course.id %}selected{% endif %}>
+                                    {{ fee.amount }} Rs.
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="total_fees_paid">Total Fees Paid</label></td>
+                    <td>
+                        <input type="number" class="form-control" name="total_fees_paid" id="total_fees_paid" value="{{ enrollment.total_fees_paid }}" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="total_fees_due">Total Fees Due</label></td>
+                    <td>
+                        <input type="number" class="form-control" name="total_fees_due" id="total_fees_due" value="{{ enrollment.total_fees_due }}" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="total_installments">Total Installments</label></td>
+                    <td>
+                        <input type="number" class="form-control" name="total_installments" id="total_installments" value="{{ enrollment.total_installments }}" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="paid_installments">Paid Installments</label></td>
+                    <td>
+                        <input type="number" class="form-control" name="paid_installments" id="paid_installments" value="{{ enrollment.paid_installments }}" required>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{% url 'enrolled_students_list' %}" class="btn btn-secondary">Back to Enrolled Students</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

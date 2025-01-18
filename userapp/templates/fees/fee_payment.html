@@ -1,0 +1,48 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+Fee Payment
+{% endblock title %}
+
+{% block content %}
+
+
+<div class="container mt-5">
+    <h1>Record Fee Payment</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="student_id" class="form-label">Student:</label>
+            <select name="student_id" class="form-select" required>
+                {% for student in students %}
+                <option value="{{ student.id }}">{{ student.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="amount_paid" class="form-label">Amount Paid:</label>
+            <input type="number" name="amount_paid" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="installment_number" class="form-label">Installment Number:</label>
+            <input type="number" name="installment_number" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="payment_mode" class="form-label">Payment Mode:</label>
+            <select name="payment_mode" class="form-select" required>
+                <option value="cash">Cash</option>
+                <option value="bank_transfer">Bank Transfer</option>
+                <option value="online">Online</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Payment</button>
+    </form>
+</div>
+
+{% endblock content %}

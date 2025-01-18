@@ -1,0 +1,183 @@
+{% extends 'user/base.html' %}
+
+{% block title %}
+Student Information
+{% endblock title %}
+
+{% block content %}
+<!-- Additional Custom Styles -->
+<style>
+    .form-container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 80rem;
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+    .section h2 {
+        color: #007BFF;
+        font-size: 1.5rem;
+    }
+
+    .details label {
+        font-weight: bold;
+    }
+
+    .details span {
+        display: block;
+        font-size: 1.1rem;
+        color: #333;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 10px;
+        transition: background-color 0.3s;
+    }
+
+    .button:hover {
+        background-color: #0056b3;
+    }
+
+    @media (max-width: 1200px) {
+        .form-container {
+            max-width: 95%;
+            padding: 15px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .form-container {
+            max-width: 100%;
+            padding: 10px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .form-container {
+            max-width: 100%;
+            padding: 10px;
+        }
+    }
+</style>
+
+
+{% if messages %}
+<div class="alert alert-warning">
+    <ul class="mb-0">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+
+<div style="border: rgb(101, 99, 99) solid 1px; width: 66rem;" class="container mt-5 form-container">
+    <h1 class="text-center text-primary mb-4">Student Profile</h1>
+
+    <div class="section mb-4">
+        <h2>Student Information</h2>
+        <div class="row mb-2">
+            <div class="col-12 col-md-6">
+                <div class="details">
+                    <label for="studentName">Name:</label>
+                    <span id="studentName"> {{ student.name }} </span>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="details">
+                    <label for="studentId">Student ID:</label>
+                    <span id="studentId"> {{ student.id }} </span>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-12 col-md-6">
+                <div class="details">
+                    <label for="dob">Date of Birth:</label>
+                    <span id="dob"> {{ student.dob }} </span>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="details">
+                    <label for="contact">Contact Number:</label>
+                    <span id="contact"> {{ student.father_phone }} </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section mb-4">
+        <h2>Class and Subject Information</h2>
+        <div class="row mb-2">
+            <div class="col-12 col-md-6">
+                <div class="details">
+                    <label for="class">Class:</label>
+                    <span id="class">10th Grade</span>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="details">
+                    <label for="subjects">Subjects:</label>
+                    <span id="subjects">Math, Science, English</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section mb-4">
+        <h2>Fee Details</h2>
+        <div class="row mb-2">
+            <div class="col-12 col-md-6">
+                <div class="details">
+                    <label for="totalFees">Total Fees:</label>
+                    <span id="totalFees">$1000</span>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="details">
+                    <label for="paidFees">Paid Fees:</label>
+                    <span id="paidFees">$600</span>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-12 col-md-6">
+                <div class="details">
+                    <label for="dueFees">Due Fees:</label>
+                    <span id="dueFees">$400</span>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="details">
+                    <label for="paymentStatus">Payment Status:</label>
+                    <span id="paymentStatus">Partially Paid</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section mb-4">
+        <h2>Additional Notes</h2>
+        <div class="details">
+            <label for="notes">Notes:</label>
+            <p id="notes">John is a diligent student and has shown improvement in his grades.</p>
+        </div>
+    </div>
+
+    <div class="section text-center">
+        <a href="edit_student.html" class="button">Edit Student Details</a>
+        <a href="payment_history.html" class="button">View Payment History</a>
+    </div>
+</div>
+{% endblock content %}

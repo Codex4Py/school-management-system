@@ -1,0 +1,36 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+Teacher Salary Payments
+{% endblock title %}
+
+{% block content %}
+<h1>Teacher Salary Payments</h1>
+<!-- Table for Salary Payments -->
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Teacher Name</th>
+            <th>Amount Paid</th>
+            <th>Payment Mode</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for payment in salary_payments %}
+            <tr>
+                <td>{{ payment.teacher.full_name }}</td>
+                <td>{{ payment.amount }}</td>
+                <td>{{ payment.payment_method }}</td>
+                <td>
+                    <a href="{% url 'delete_teacher_salary_payment' payment.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this salary payment?')">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Button to add a new salary payment -->
+<a href="{% url 'add_teacher_salary_payment' %}" class="btn btn-primary">Add Salary Payment</a>
+</div>
+{% endblock content %}

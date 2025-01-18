@@ -1,0 +1,81 @@
+{% extends 'user/base.html' %}
+
+{% block content %}
+<style>
+    .form-container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 80rem;
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+    /* Make it responsive on smaller screens */
+    @media (max-width: 1200px) {
+        .form-container {
+            max-width: 95%;
+            /* Allows some margin on the sides */
+            padding: 15px;
+            /* Adjust padding for smaller screens */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .form-container {
+            max-width: 100%;
+            /* Takes up full width on smaller screens like tablets */
+            padding: 10px;
+            /* Reduced padding for better space utilization */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .form-container {
+            max-width: 100%;
+            /* Ensures full width on mobile screens */
+            padding: 10px;
+            /* Keeps padding consistent on mobile */
+        }
+    }
+</style>
+
+<div style="border: rgb(101, 99, 99) solid 1px; width: 66rem;" class="form-container mt-5">
+    <h2 style="text-align: center;"" > Our Classes </h2>
+    
+    {% if classes %}
+        <!-- Table for displaying classes -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Class Name</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Grade Level</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for class_obj in classes %}
+                    <tr>
+                        <td>{{ class_obj.name }}</td>
+                        <td>{{ class_obj.subject }}</td>
+                        <td>{% if class_obj.grade_level %}{{ class_obj.grade_level }}{% else %}N/A{% endif %}</td>
+                        <td>
+                            <a href="{% url 'edit_class' class_obj.id %}" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="{% url 'delete_class' class_obj.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No classes found.</p>
+    {% endif %}
+    
+    <div class="mt-4">
+        <a href="{% url 'add_class' %}" class="btn btn-primary">Add New Class</a>
+    </div>
+</div>
+{% endblock %}

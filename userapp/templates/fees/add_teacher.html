@@ -1,0 +1,173 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+Add Teacher
+{% endblock title %}
+
+{% block content %}
+<style>
+    .form-container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 80rem;
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+    /* Make it responsive on smaller screens */
+    @media (max-width: 1200px) {
+        .form-container {
+            max-width: 95%;
+            /* Allows some margin on the sides */
+            padding: 15px;
+            /* Adjust padding for smaller screens */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .form-container {
+            max-width: 100%;
+            /* Takes up full width on smaller screens like tablets */
+            padding: 10px;
+            /* Reduced padding for better space utilization */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .form-container {
+            max-width: 100%;
+            /* Ensures full width on mobile screens */
+            padding: 10px;
+            /* Keeps padding consistent on mobile */
+        }
+    }
+</style>
+
+<div style="border: rgb(101, 99, 99) solid 1px; width: 66rem;" class="form-container mt-4">
+    <h1 class="text-center mb-4">Add New Teacher</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <!-- Column 1 -->
+            <div class="col-md-4">
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label for="full_name">Full Name:</label>
+                    <input type="text" name="full_name" value="{{ request.user.full_name }}" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="user_id">User Id:</label>
+                    <input type="text" name="user_id" id="user_id" value="{{ request.user.id }}" class="form-control" required>
+                </div>
+
+                <!-- Date of Birth -->
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" name="dob" class="form-control" required>
+                </div>
+
+                <!-- Gender -->
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select name="gender" class="form-control" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="form-group">
+                    <label for="phone_number">Phone Number:</label>
+                    <input type="text" name="phone_number" class="form-control" required>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" value="{{ request.user.email }}" class="form-control" required>
+                </div>
+            </div>
+
+            <!-- Column 2 -->
+            <div class="col-md-4">
+                <!-- Address -->
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" name="address" class="form-control" required>
+                </div>
+
+                <!-- Department -->
+                <div class="form-group">
+                    <label for="department">Department:</label>
+                    <input type="text" name="department" class="form-control" required>
+                </div>
+
+                <!-- Designation -->
+                <div class="form-group">
+                    <label for="designation">Designation:</label>
+                    <input type="text" name="designation" class="form-control" required>
+                </div>
+
+                <!-- Experience -->
+                <div class="form-group">
+                    <label for="experience">Experience (in years):</label>
+                    <input type="number" name="experience" class="form-control" required>
+                </div>
+
+                <!-- Qualification -->
+                <div class="form-group">
+                    <label for="qualification">Qualification:</label>
+                    <input type="text" name="qualification" class="form-control" required>
+                </div>
+            </div>
+
+            <!-- Column 3 -->
+            <div class="col-md-4">
+                <!-- Specialization -->
+                <div class="form-group">
+                    <label for="specialization">Specialization:</label>
+                    <select name="specialization" class="form-control" required>
+                        {% for course in courses %}
+                        <option value="{{ course.name }}">{{ course.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Profile Photo -->
+                <div class="form-group">
+                    <label for="profile_photo">Profile Photo:</label>
+                    <input type="file" name="profile_photo" class="form-control">
+                </div>
+
+                <!-- Date of Joining -->
+                <div class="form-group">
+                    <label for="joining_date">Date of Joining:</label>
+                    <input type="date" name="joining_date" class="form-control" required>
+                </div>
+
+                <!-- Salary -->
+                <div class="form-group">
+                    <label for="salary">Salary:</label>
+                    <input type="number" name="salary" class="form-control" step="0.01" required>
+                </div>
+
+                <!-- Active Checkbox -->
+                <div class="form-check">
+                    <input type="checkbox" name="is_active" class="form-check-input">
+                    <label class="form-check-label" for="is_active">Active</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary">Add Teacher</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

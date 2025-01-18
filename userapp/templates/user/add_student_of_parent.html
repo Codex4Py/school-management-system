@@ -1,0 +1,51 @@
+{% extends 'user/base.html' %}
+
+{% block title %}
+Add Student 
+{% endblock title %}
+
+{% block content %}
+
+{% if messages %}
+<div class="mt-3">
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="container mt-4">
+    <h2>Add Student for Parent</h2>
+
+    <!-- Display any success or error messages -->
+    {% if messages %}
+        <div class="alert alert-info">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Form to add student -->
+    <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Dropdown to select a student -->
+        <div class="mb-3">
+            <label for="student" class="form-label">Select Student</label>
+            <select name="student" id="student" class="form-select" required>
+                <option value="" disabled selected>Select a student</option>
+                {% for student in students %}
+                    <option value="{{ student.id }}">{{ student.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Hidden field to pass the parent ID (optional: you can hide it entirely in the form data) -->
+        <input type="hidden" name="parent" value="{{ request.user.id }}">
+
+        <button type="submit" class="btn btn-primary">Add Student</button>
+    </form>
+</div>
+{% endblock %}

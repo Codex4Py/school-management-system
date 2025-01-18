@@ -1,0 +1,12 @@
+<!-- success.html -->
+{% extends "accounts/base.html" %}
+
+{% block title %}
+Success - Student Admission
+{% endblock title %}
+
+{% block content %}
+<h1 style="text-align: center;" >Form Submitted Successfully!</h1>
+<p style="text-align: center;" >Student: {{ student.name }}</p>
+<p style="text-align: center;" >Course: {{ student.course.name }}</p>
+{% endblock %}

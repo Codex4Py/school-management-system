@@ -1,0 +1,14 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+Apply for this Exam
+{% endblock title %}
+
+{% block content %}
+<h1>{{ exam.title }}</h1>
+<p>{{ exam.description }}</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Apply for this Exam</button>
+</form>
+{% endblock content %}

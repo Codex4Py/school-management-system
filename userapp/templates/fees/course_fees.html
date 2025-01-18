@@ -1,0 +1,29 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+Course Fees
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Course Fees</h1>
+    
+    <!-- Table for displaying course fees -->
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Course Name</th>
+                <th>Fee Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+                <tr>
+                    <td>{{ course.course_name.name }}</td>
+                    <td>{{ course.fees_for_course }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

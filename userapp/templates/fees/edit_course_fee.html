@@ -1,0 +1,36 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+    Edit Course Fee
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Edit Course Fee</h1>
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="course_name" class="form-label">Course Name:</label>
+            <select name="course_name" class="form-select" required>
+                {% for course in courses %}
+                    <option value="{{ course.id }}" 
+                        {% if course_fee.course_name and course.id == course_fee.course_name.id %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ course.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="fees_for_course" class="form-label">Fees Amount:</label>
+            <input type="number" name="fees_for_course" class="form-control" value="{{ course_fee.fees_for_course }}" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Fee</button>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,61 @@
+{% extends "accounts/base.html" %}
+
+{% block title %}
+Student Admission Form
+{% endblock title %}
+
+{% block content %}
+<style>
+    /* Add your CSS styles here (as previously discussed) */
+</style>
+
+<div class="form-container">
+    <h1>Student Admission Form</h1>
+    <form method="POST" action="{% url 'admission_form' %}">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th for="name">Full Name:</th>
+                <td><input type="text" id="name" name="name" placeholder="Enter full name" required></td>
+            </tr>
+            <tr>
+                <th for="email">Email:</th>
+                <td><input type="email" id="email" name="email" placeholder="Enter email address" required></td>
+            </tr>
+            <tr>
+                <th for="dob">Date of Birth:</th>
+                <td><input type="date" id="dob" name="dob" required></td>
+            </tr>
+            <tr>
+                <th for="gender">Gender:</th>
+                <td>
+                    <select id="gender" name="gender" required>
+                        <option value="" disabled selected>Select your gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th for="course">Course Applied For:</th>
+                <td>
+                    <select id="course" name="course" required>
+                        <option value="" disabled selected>Select course</option>
+                        {% for course in courses %}
+                            <option value="{{ course.id }}">{{ course.name }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th for="address">Address:</th>
+                <td><textarea id="address" name="address" rows="3" placeholder="Enter your address" required></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Submit</button></td>
+            </tr>
+        </table>
+    </form>
+</div>
+{% endblock content %}

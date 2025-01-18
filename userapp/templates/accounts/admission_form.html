@@ -1,0 +1,202 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+Student Admission Form
+{% endblock title %}
+
+{% block content %}
+<style>
+    /* Responsive and Improved Style */
+    body {
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
+
+    .form-container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 80rem;
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+    @media (max-width: 1200px) {
+        .form-container {
+            max-width: 95%;
+            padding: 15px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .form-container {
+            max-width: 100%;
+            padding: 10px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .form-container {
+            max-width: 100%;
+            padding: 10px;
+        }
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        font-size: 24px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    td, th {
+        padding: 12px;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    th {
+        width: 30%;
+        font-weight: bold;
+        color: #555;
+    }
+
+    input, select, textarea, button {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        border: none;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    #successMessage {
+        text-align: center;
+        color: green;
+        margin-top: 20px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    @media (max-width: 600px) {
+        h1 {
+            font-size: 20px;
+        }
+
+        table, th, td {
+            font-size: 14px;
+        }
+
+        button {
+            font-size: 14px;
+        }
+    }
+</style>
+
+{% if messages %}
+<ul class="error-messages">
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div style="border: rgb(101, 99, 99) solid 1px; width: 66rem;" class="form-container">
+    <h1>Student Admission Form</h1>
+    <form method="POST" action="{% url 'admission_form' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            <!-- User Field (hidden) -->
+            <tr>
+                <th for="name">Student ID:</th>
+                <input name="user" value="{{ request.user.id }}">
+            </tr>
+
+            <tr>
+                <th for="name">Full Name:</th>
+                <td><input type="text" id="name" name="name" placeholder="Enter full name" required></td>
+            </tr>
+            <tr>
+                <th for="email">Email:</th>
+                <td><input type="email" id="email" name="email" placeholder="Enter email address" required></td>
+            </tr>
+            <tr>
+                <th for="dob">Date of Birth:</th>
+                <td><input type="date" id="dob" name="dob" required></td>
+            </tr>
+            <tr>
+                <th for="gender">Gender:</th>
+                <td>
+                    <select id="gender" name="gender" required>
+                        <option value="" disabled selected>Select your gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th for="course">Course Applied For:</th>
+                <td>
+                    <select id="course" name="course" required>
+                        <option value="" disabled selected>Select course</option>
+                        {% for course in courses %}
+                        <option value="{{ course.id }}">{{ course.name }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th for="address">Address:</th>
+                <td><textarea id="address" name="address" rows="3" placeholder="Enter your address" required></textarea></td>
+            </tr>
+            <tr>
+                <th for="profile_photo">Profile Photo:</th>
+                <td><input type="file" id="profile_photo" name="profile_photo" accept="image/*"></td>
+            </tr>
+            <tr>
+                <th for="father_name">Father's Name:</th>
+                <td><input type="text" id="father_name" name="father_name" placeholder="Enter father's name" required></td>
+            </tr>
+            <tr>
+                <th for="father_occupation">Father's Occupation:</th>
+                <td><input type="text" id="father_occupation" name="father_occupation" placeholder="Enter father's occupation" required></td>
+            </tr>
+            <tr>
+                <th for="father_phone">Father's Phone:</th>
+                <td><input type="tel" id="father_phone" name="father_phone" placeholder="Enter father's phone number" required></td>
+            </tr>
+            <tr>
+                <th for="mother_name">Mother's Name:</th>
+                <td><input type="text" id="mother_name" name="mother_name" placeholder="Enter mother's name" required></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Submit</button></td>
+            </tr>
+        </table>
+    </form>
+    <p id="successMessage" class="hidden">Form submitted successfully!</p>
+</div>
+{% endblock content %}

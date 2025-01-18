@@ -1,0 +1,14 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+All Exams
+{% endblock title %}
+
+{% block content %}
+<h1>Available Exams</h1>
+<ul>
+    {% for exam in exams %}
+    <li><a href="{% url 'exam_detail' exam.id %}">{{ exam.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock content %}

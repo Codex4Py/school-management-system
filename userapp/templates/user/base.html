@@ -1,0 +1,89 @@
+{% include 'user/header.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title %} {% endblock title %} </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            height: 100vh;
+            background-color: #2c3e50;
+            color: white;
+        }
+        .nav-link {
+            color: white;
+        }
+        .nav-link:hover {
+            background-color: #34495e;
+            color: white;
+        }
+        .card {
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar p-3">
+                <h4 class="text-center mb-4"> Codex Developer </h4>
+                <div class="nav flex-column">
+
+                    {% if user.role == 'admin' %}
+                    <a href="{% url 'admin_dashboard' %}" class="nav-link active"><i class="fas fa-home me-2"></i>Dashboard</a>
+                    <a href="{% url "student_list" %}" class="nav-link"><i class="fas fa-user-graduate me-2"></i>Students</a>
+                    <a href="{% url "parent_list" %}" class="nav-link"><i class="fas fa-user me-2"></i> Parents </a>
+                    <a href="{% url "teacher_list" %}" class="nav-link"><i class="fas fa-chalkboard-teacher me-2"></i>Teachers</a>
+                    <a href="{% url "course_list" %}" class="nav-link"><i class="fas fa-book me-2"></i>Course</a>
+                    <a href="{% url "enrolled_students_list" %}" class="nav-link"><i class="fa-solid fa-school me-2"></i>Enrolled</a>
+                    <a href="#" class="nav-link"><i class="fas fa-user-graduate me-2"></i>Application Status</a>
+                    <a href="#" class="nav-link"><i class="fas fa-book me-2"></i>Exam Records</a>
+                    {% endif %} 
+
+                    {% if user.role == 'teacher' %}
+                    <a href="{% url 'teacher_dashboard' %}" class="nav-link active"><i class="fas fa-home me-2"></i>Dashboard</a>
+                    <a href="#" class="nav-link"><i class="fas fa-book me-2"></i>Classes</a>
+                    <a href="#" class="nav-link"><i class="fas fa-calendar-alt me-2"></i>Schedule</a>
+                    <a href="#" class="nav-link"><i class="fas fa-book me-2"></i>Exam Records</a>
+                    <a href="#" class="nav-link"><i class="fas fa-record-vinyl me-2"></i>Attendance</a>
+                    {% endif %}
+
+                    {% if user.role == 'student' %}
+                    <a href="{% url 'student_dashboard' %}" class="nav-link active"><i class="fas fa-home me-2"></i>Dashboard</a>
+                    <a href="/add-fee-payment" class="nav-link"><i class="fas fa-book me-2"></i>Pay Fees</a>
+                    <a href="#" class="nav-link"><i class="fas fa-calendar-alt me-2"></i>Schedule</a>
+                    <a href="#" class="nav-link"><i class="fas fa-book me-2"></i>Exam Records</a>
+                    <a href="#" class="nav-link"><i class="fas fa-record-vinyl me-2"></i>Attendance</a>
+                    {% endif %}
+
+                    {% if user.role == 'parent' %}
+                    <a href="{% url 'parent_dashboard' %}" class="nav-link active"><i class="fas fa-home me-2"></i>Dashboard</a>
+                    <a href="#" class="nav-link"><i class="fas fa-book me-2"></i>Classes</a>
+                    <a href="#" class="nav-link"><i class="fas fa-calendar-alt me-2"></i>Schedule</a>
+                    <a href="#" class="nav-link"><i class="fas fa-book me-2"></i>Exam Records</a>
+                    <a href="#" class="nav-link"><i class="fas fa-record-vinyl me-2"></i>Attendance</a>
+                    {% endif %}
+
+                    <a href="#" class="nav-link"><i class="fas fa-cog me-2"></i>Settings</a>
+                </div>
+            </div>
+            <!-- Main Content -->
+            <div class="col-md-10 p-4">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% include 'user/footer.html' %}

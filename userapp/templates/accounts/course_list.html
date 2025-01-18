@@ -1,0 +1,99 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+Course List
+{% endblock title %}
+
+{% block content %}
+<style>
+    .form-container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 80rem;
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+    /* Make it responsive on smaller screens */
+    @media (max-width: 1200px) {
+        .form-container {
+            max-width: 95%;
+            /* Allows some margin on the sides */
+            padding: 15px;
+            /* Adjust padding for smaller screens */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .form-container {
+            max-width: 100%;
+            /* Takes up full width on smaller screens like tablets */
+            padding: 10px;
+            /* Reduced padding for better space utilization */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .form-container {
+            max-width: 100%;
+            /* Ensures full width on mobile screens */
+            padding: 10px;
+            /* Keeps padding consistent on mobile */
+        }
+    }
+
+
+    .table th,
+    .table td {
+        vertical-align: middle;
+    }
+
+    .table-actions {
+        display: flex;
+        justify-content: space-around;
+    }
+</style>
+<div style="border: rgb(101, 99, 99) solid 1px; width: 66rem;" class="form-container">
+    <h1 class="text-center mb-4">Courses</h1>
+
+    <!-- Create Course Button -->
+    <div class="mb-3 text-center">
+        <a href="{% url 'create_course' %}" class="btn btn-primary btn-lg">Create New Course</a>
+    </div>
+
+    <!-- Table to Display Courses -->
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Course Name</th>
+                    <th>Description</th>
+                    <th>Duration (in Month)</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in courses %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ course.name }}</td>
+                    <td>{{ course.description|slice:":50" }}...</td> <!-- Limit description length -->
+                    <td>{{ course.duration }}</td>
+                    <td>{{ course.status }}</td>
+                    <td class="table-actions">
+                        <a href="{% url 'edit_course' course.id %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'delete_course' course.id %}" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Are you sure you want to delete this course?');">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

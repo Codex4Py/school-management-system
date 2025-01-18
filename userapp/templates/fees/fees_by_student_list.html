@@ -1,0 +1,39 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+Fees by Students
+{% endblock title %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Fees Paid by Students</h1>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Fees Amount</th>
+                    <th>Payment Mode</th>
+                    <th>Installment</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fee in fees_by_students %}
+                    <tr>
+                        <td>{{ fee.student_name.name }}</td>
+                        <td>{{ fee.fees_amount }} Rs.</td>
+                        <td>{{ fee.payment_mode }}</td>
+                        <td>{{ fee.installment_number }} of {{ fee.total_installments }}</td>
+                        <td>
+                            <a href="{% url 'edit_fee_payment' fee.id %}" class="btn btn-warning btn-sm">Edit</a> |
+                            <a href="{% url 'delete_fee_payment' fee.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this fee payment?');">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'add_fee_payment' %}" class="btn btn-primary mt-3">Add New Fee Payment</a>
+    </div>
+{% endblock content %}

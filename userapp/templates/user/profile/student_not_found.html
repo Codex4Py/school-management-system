@@ -1,0 +1,13 @@
+<!-- student_not_found.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Not Found</title>
+</head>
+<body>
+    <h1>Student with ID {{ student_id }} not found</h1>
+    <p>The student you are trying to view does not exist.</p>
+    <a href="{% url 'student_list' %}">Go back to the student list</a> <!-- Customize this URL -->
+</body>
+</html>

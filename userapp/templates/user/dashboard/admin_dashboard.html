@@ -1,0 +1,183 @@
+{% extends 'user/base.html' %}
+
+{% block title %}
+ Admin Dashboard
+{% endblock title %}
+
+{% block content %}
+<!-- Welcome Banner -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h4 class="card-title mb-0">Admin Dashboard</h4>
+                <p class="mb-0">School Management System</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Stats -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-users fa-2x text-primary mb-2"></i>
+                <h5 class="card-title">Total Students</h5>
+                <h3 class="mb-0"> {{ total_students }} </h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-chalkboard-teacher fa-2x text-success mb-2"></i>
+                <h5 class="card-title">Total Teachers</h5>
+                <h3 class="mb-0"> {{ total_teachers }} </h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-book fa-2x text-warning mb-2"></i>
+                <h5 class="card-title">Total Courses</h5>
+                <h3 class="mb-0"> {{ total_courses }} </h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-school fa-2x text-info mb-2"></i>
+                <h5 class="card-title">Total Enrolled Student </h5>
+                <h3 class="mb-0"> {{ total_enrolled_students }} </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Management Sections -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Recent Registrations</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Gmail</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td> {{ user.full_name }} </td>
+                                <td>{{ user.get_role_display }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>
+                                    {% if user.is_active %}
+                                    <span class="badge bg-success"> Active </span>
+                                    {% else %}
+                                    <span class="badge bg-danger"> Inactive </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if user.role == 'admin' %}
+                                        <span> No Action </span>
+                                    {% else %}
+                                        {% if user.is_active %}
+                                            <form action="{% url 'deactivate_user' user.id %}" method="post" style="display:inline;">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-warning">Deactivate</button>
+                                            </form>
+                                        {% else %}
+                                            <form action="{% url 'activate_user' user.id %}" method="post" style="display:inline;">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-success">Activate</button>
+                                            </form>
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">System Overview</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="systemOverviewChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Action Buttons -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <a href="{% url 'add_new_user' %}" class="btn btn-primary w-100 mb-3">
+            <i class="fas fa-user-plus me-2"></i>Add New User
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="#" class="btn btn-success w-100 mb-3">
+            <i class="fas fa-cog me-2"></i>System Settings
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="#" class="btn btn-warning w-100 mb-3">
+            <i class="fas fa-bell me-2"></i>Announcements
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="#" class="btn btn-info w-100 mb-3">
+            <i class="fas fa-file-alt me-2"></i>Generate Reports
+        </a>
+    </div>
+</div>
+
+
+<!-- Chart.js for system overview -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('systemOverviewChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Students', 'Teachers', 'Parents', 'Courses'],
+            datasets: [{
+                data: [{{ total_students }}, {{ total_teachers }}, {{ total_parent }} , {{ total_courses }}],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(75, 192, 192, 0.8)',
+                    'rgba(255, 206, 86, 0.8)',
+                    'rgba(153, 102, 255, 0.8)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}

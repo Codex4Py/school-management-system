@@ -1,0 +1,125 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+Create Course
+{% endblock title %}
+
+{% block content %}
+<style>
+    .form-container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 80rem;
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+    /* Make it responsive on smaller screens */
+    @media (max-width: 1200px) {
+        .form-container {
+            max-width: 95%;
+            /* Allows some margin on the sides */
+            padding: 15px;
+            /* Adjust padding for smaller screens */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .form-container {
+            max-width: 100%;
+            /* Takes up full width on smaller screens like tablets */
+            padding: 10px;
+            /* Reduced padding for better space utilization */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .form-container {
+            max-width: 100%;
+            /* Ensures full width on mobile screens */
+            padding: 10px;
+            /* Keeps padding consistent on mobile */
+        }
+    }
+
+
+    .form-heading {
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .table th,
+    .table td {
+        vertical-align: middle;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 0.25rem;
+    }
+
+    .form-label {
+        font-weight: 500;
+    }
+
+    .table td {
+        padding: 0.75rem;
+    }
+</style>
+<div style="border: rgb(101, 99, 99) solid 1px; width: 66rem;" class="form-container">
+    <h2 class="form-heading text-center">Create New Course</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Table Form Layout -->
+        <table class="table table-bordered">
+            <tbody>
+                <!-- Course Name -->
+                <tr>
+                    <td><label for="name" class="form-label">Course Name:</label></td>
+                    <td><input type="text" id="name" name="name" class="form-control" required></td>
+                </tr>
+
+                <!-- Description -->
+                <tr>
+                    <td><label for="description" class="form-label">Description:</label></td>
+                    <td><textarea id="description" name="description" class="form-control" rows="4" required></textarea>
+                    </td>
+                </tr>
+
+                <!-- Duration -->
+                <tr>
+                    <td><label for="duration" class="form-label">Duration (in Month):</label></td>
+                    <td><input type="number" id="duration" name="duration" class="form-control" required></td>
+                </tr>
+
+                <!-- Prerequisites -->
+                <tr>
+                    <td><label for="prerequisites" class="form-label">Prerequisites (optional):</label></td>
+                    <td><textarea id="prerequisites" name="prerequisites" class="form-control" rows="3"></textarea></td>
+                </tr>
+
+                <!-- Status -->
+                <tr>
+                    <td><label for="status" class="form-label">Status:</label></td>
+                    <td>
+                        <select id="status" name="status" class="form-select">
+                            <option value="Active">Active</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Create Course Button -->
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary btn-lg">Create Course</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

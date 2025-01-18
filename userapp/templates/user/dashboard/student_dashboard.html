@@ -1,0 +1,188 @@
+{% extends 'user/base.html' %}
+
+
+{% block title %}
+Dashboard
+{% endblock title %}
+
+{% block content %}
+
+{% if messages %}
+<div class="mt-3">
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<!-- Welcome Banner -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h4 class="card-title mb-0">Welcome Back, {{ request.user.username }}</h4>
+                <p class="mb-0"> {{ request.user.role }} | Email: {{ request.user.email }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Stats -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-book-reader fa-2x text-primary mb-2"></i>
+                <h5 class="card-title">Attendance</h5>
+                <h3 class="mb-0">95%</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-chart-line fa-2x text-success mb-2"></i>
+                <h5 class="card-title">Average Grade</h5>
+                <h3 class="mb-0">A-</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-tasks fa-2x text-warning mb-2"></i>
+                <h5 class="card-title">Assignments</h5>
+                <h3 class="mb-0">5</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-calendar-check fa-2x text-info mb-2"></i>
+                <h5 class="card-title">Events</h5>
+                <h3 class="mb-0">3</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Timetable and Assignments -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Today's Timetable</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Subject</th>
+                                <th>Teacher</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>8:00 AM</td>
+                                <td>Mathematics</td>
+                                <td>Mr. Johnson</td>
+                            </tr>
+                            <tr>
+                                <td>9:00 AM</td>
+                                <td>Science</td>
+                                <td>Mrs. Smith</td>
+                            </tr>
+                            <tr>
+                                <td>10:30 AM</td>
+                                <td>English</td>
+                                <td>Ms. Davis</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Pending Assignments</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">Mathematics Assignment</h6>
+                            <small class="text-danger">Due Tomorrow</small>
+                        </div>
+                        <p class="mb-1">Chapter 5 - Algebra Problems</p>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">Science Project</h6>
+                            <small class="text-warning">Due in 3 days</small>
+                        </div>
+                        <p class="mb-1">Environmental Conservation</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Announcements and Progress -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Announcements</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <h6 class="fw-bold">Annual Sports Day</h6>
+                    <p class="small text-muted mb-1">Posted 1 day ago</p>
+                    <p>Annual Sports Day will be held next Friday. All students must participate.</p>
+                </div>
+                <div class="mb-3">
+                    <h6 class="fw-bold">Parent-Teacher Meeting</h6>
+                    <p class="small text-muted mb-1">Posted 2 days ago</p>
+                    <p>PTM scheduled for next Saturday. Attendance is mandatory.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Subject Progress</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Mathematics</label>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" style="width: 85%">85%</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Science</label>
+                    <div class="progress">
+                        <div class="progress-bar bg-info" style="width: 78%">78%</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">English</label>
+                    <div class="progress">
+                        <div class="progress-bar bg-warning" style="width: 72%">72%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

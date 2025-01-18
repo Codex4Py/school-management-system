@@ -1,0 +1,124 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+Edit Student Information
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Edit Student Information</h1>
+    <hr>
+    
+    {% if messages %}
+        <div class="alert alert-warning">
+            <ul class="mb-0">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data" action="{% url 'edit_student' student.id %}">
+        {% csrf_token %}
+        
+        <div class="row mb-3">
+            <label for="name" class="col-sm-2 col-form-label">Full Name</label>
+            <div class="col-sm-10">
+                <input type="text" id="name" name="name" class="form-control" placeholder="Enter full name" value="{{ student.name }}" required>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="email" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter email address" value="{{ student.email }}" required>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="dob" class="col-sm-2 col-form-label">Date of Birth</label>
+            <div class="col-sm-10">
+                <input type="date" id="dob" name="dob" class="form-control" value="{{ student.dob|date:'Y-m-d' }}" required>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="gender" class="col-sm-2 col-form-label">Gender</label>
+            <div class="col-sm-10">
+                <select id="gender" name="gender" class="form-select" required>
+                    <option value="" disabled>Select your gender</option>
+                    <option value="male" {% if student.gender == 'male' %}selected{% endif %}>Male</option>
+                    <option value="female" {% if student.gender == 'female' %}selected{% endif %}>Female</option>
+                    <option value="other" {% if student.gender == 'other' %}selected{% endif %}>Other</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="course" class="col-sm-2 col-form-label">Course Applied For</label>
+            <div class="col-sm-10">
+                <select id="course" name="course" class="form-select" required>
+                    <option value="" disabled>Select course</option>
+                    {% for course in courses %}
+                        <option value="{{ course.id }}" {% if course.id == student.course.id %}selected{% endif %}>{{ course.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="address" class="col-sm-2 col-form-label">Address</label>
+            <div class="col-sm-10">
+                <textarea id="address" name="address" class="form-control" rows="3" placeholder="Enter your address" required>{{ student.address }}</textarea>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="profile_photo" class="col-sm-2 col-form-label">Profile Photo</label>
+            <div class="col-sm-10">
+                <input type="file" id="profile_photo" name="profile_photo" accept="image/*" class="form-control">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="father_name" class="col-sm-2 col-form-label">Father's Name</label>
+            <div class="col-sm-10">
+                <input type="text" id="father_name" name="father_name" class="form-control" placeholder="Enter father's name" value="{{ student.father_name }}" required>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="father_occupation" class="col-sm-2 col-form-label">Father's Occupation</label>
+            <div class="col-sm-10">
+                <input type="text" id="father_occupation" name="father_occupation" class="form-control" placeholder="Enter father's occupation" value="{{ student.father_occupation }}" required>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="father_phone" class="col-sm-2 col-form-label">Father's Phone</label>
+            <div class="col-sm-10">
+                <input type="tel" id="father_phone" name="father_phone" class="form-control" placeholder="Enter father's phone number" value="{{ student.father_phone }}" required>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="mother_name" class="col-sm-2 col-form-label">Mother's Name</label>
+            <div class="col-sm-10">
+                <input type="text" id="mother_name" name="mother_name" class="form-control" placeholder="Enter mother's name" value="{{ student.mother_name }}" required>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Bootstrap JS (if not already included in base.html) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+{% endblock content %}

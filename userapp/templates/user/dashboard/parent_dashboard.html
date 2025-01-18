@@ -1,0 +1,198 @@
+{% extends 'user/base.html' %}
+
+
+{% block title %}
+Dashboard
+{% endblock title %}
+
+{% block content %}
+
+{% if messages %}
+<div class="mt-3">
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<!-- Welcome Banner -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h4 class="card-title mb-0">Welcome, {{ request.user.username }}</h4>
+                <p class="mb-0"> {{ request.user.role }} | Email: {{ request.user.email }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Stats -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-book-reader fa-2x text-primary mb-2"></i>
+                <h5 class="card-title">Attendance</h5>
+                <h3 class="mb-0">{{ student.attendance }}%</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-chart-line fa-2x text-success mb-2"></i>
+                <h5 class="card-title">Overall Grade</h5>
+                <h3 class="mb-0">{{ student.grade_average }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-calendar-alt fa-2x text-warning mb-2"></i>
+                <h5 class="card-title">Next PTM</h5>
+                <h3 class="mb-0">Mar 15</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-bell fa-2x text-info mb-2"></i>
+                <h5 class="card-title">Notifications</h5>
+                <h3 class="mb-0">4</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Academic Progress and Announcements -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Academic Progress</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Mathematics</label>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" style="width: 85%">85%</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Science</label>
+                    <div class="progress">
+                        <div class="progress-bar bg-info" style="width: 78%">78%</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">English</label>
+                    <div class="progress">
+                        <div class="progress-bar bg-warning" style="width: 72%">72%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Recent Announcements</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <h6 class="fw-bold">Annual Sports Day</h6>
+                    <p class="small text-muted mb-1">Posted 1 day ago</p>
+                    <p>Annual Sports Day will be held next Friday. Parents are cordially invited.</p>
+                </div>
+                <div class="mb-3">
+                    <h6 class="fw-bold">Parent-Teacher Meeting</h6>
+                    <p class="small text-muted mb-1">Posted 2 days ago</p>
+                    <p>PTM scheduled for March 15th. Your attendance is important.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fees and Attendance -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Fee Status</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Fee Type</th>
+                                <th>Amount</th>
+                                <th>Due Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tuition Fee</td>
+                                <td>$500</td>
+                                <td>Mar 10, 2024</td>
+                                <td><span class="badge bg-success">Paid</span></td>
+                            </tr>
+                            <tr>
+                                <td>Lab Fee</td>
+                                <td>$100</td>
+                                <td>Mar 15, 2024</td>
+                                <td><span class="badge bg-warning">Pending</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Monthly Attendance</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="attendanceChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js for attendance chart -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('attendanceChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Attendance Percentage',
+                data: [95, 92, 88, 95, 91, 93],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+</script>
+
+
+    {% endblock %}

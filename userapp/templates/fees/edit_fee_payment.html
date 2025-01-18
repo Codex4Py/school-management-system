@@ -1,0 +1,66 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+Edit Fee Payment
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Edit Fee Payment</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="row">
+            <!-- Student Selection -->
+            <div class="col-md-6 mb-3">
+                <label for="student_name" class="form-label">Student:</label>
+                <select name="student_name" class="form-select" required>
+                    {% for student in students %}
+                        <option value="{{ student.id }}" {% if fee_payment.student_name.id == student.id %}selected{% endif %}>
+                            {{ student.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Fee Amount -->
+            <div class="col-md-6 mb-3">
+                <label for="fees_amount" class="form-label">Fee Amount:</label>
+                <input type="number" name="fees_amount" class="form-control" value="{{ fee_payment.fees_amount }}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Payment Mode -->
+            <div class="col-md-6 mb-3">
+                <label for="payment_mode" class="form-label">Payment Mode:</label>
+                <select name="payment_mode" class="form-select" required>
+                    <option value="Cash" {% if fee_payment.payment_mode == 'Cash' %}selected{% endif %}>Cash</option>
+                    <option value="Online" {% if fee_payment.payment_mode == 'Online' %}selected{% endif %}>Online</option>
+                    <option value="Check" {% if fee_payment.payment_mode == 'Check' %}selected{% endif %}>Check</option>
+                </select>
+            </div>
+
+            <!-- Installment Number -->
+            <div class="col-md-6 mb-3">
+                <label for="installment_number" class="form-label">Installment Number:</label>
+                <input type="number" name="installment_number" class="form-control" value="{{ fee_payment.installment_number }}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Total Installments -->
+            <div class="col-md-6 mb-3">
+                <label for="total_installments" class="form-label">Total Installments:</label>
+                <input type="number" name="total_installments" class="form-control" value="{{ fee_payment.total_installments }}" required>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Update Fee Payment</button>
+            <a href="{% url 'fees_by_student_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock content %}
